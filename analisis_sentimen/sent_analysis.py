@@ -26,6 +26,7 @@ all_words = nltk.FreqDist(all_words)
 word_features = list(all_words.keys())
 
 
+# function to find features in a document
 def find_features(document):
     words = set(document)
     features = {}
@@ -36,9 +37,11 @@ def find_features(document):
 
 featuresets = []
 
+# add every feature and its category to featuresets
 for (rev, category) in documents:
     featuresets.append((find_features(rev), category))
 
+# 70:30 ratio of 2000 data
 training_set = featuresets[:1400]
 testing_set = featuresets[1400:]
 
