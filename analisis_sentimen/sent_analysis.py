@@ -3,23 +3,18 @@ import random
 import string
 from nltk.corpus import movie_reviews, stopwords
 
-documents = []
-
 # tokenizing each file to words and label them with its category for training (output: list of tuples)
-for category in movie_reviews.categories():
-    for fileid in movie_reviews.fileids(category):
-        documents.append((list(movie_reviews.words(fileid)), category))
+documents = [(list(movie_reviews.words(fileid)), category)
+             for category in movie_reviews.categories()
+             for fileid in movie_reviews.fileids(category)]
 
 # shuffle the data to avoid ordered label
 random.shuffle(documents)
 
-all_words = []
 stop_words = set(stopwords.words('english'))
 
 # remove stopwords, punctuation and normalize movie_review corpus and add it to all_words
-for w in movie_reviews.words():
-    if w not in stop_words and w not in string.punctuation:
-        all_words.append(w.lower())
+all_words = [w.lower() for w in movie_reviews.words() if w not in stop_words and w not in string.punctuation]
 
 # reduce all_words to contains only most common words (convert words to features) (output: keys:values - words:count)
 all_words = nltk.FreqDist(all_words)
@@ -35,11 +30,8 @@ def find_features(document):
     return features
 
 
-featuresets = []
-
 # add every feature and its category to featuresets
-for (rev, category) in documents:
-    featuresets.append((find_features(rev), category))
+featuresets = [(find_features(rev), category) for (rev, category) in documents]
 
 # 70:30 ratio of 2000 data
 training_set = featuresets[:1400]
