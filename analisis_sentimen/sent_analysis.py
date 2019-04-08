@@ -1,12 +1,31 @@
 import nltk
 import random
 import string
+import pickle
 from nltk.corpus import movie_reviews, stopwords
+from nltk.classify import ClassifierI
+
+
+class VoteLabel(ClassifierI):
+    def __init__(self, classifiers):
+        self.classifiers = classifiers
+
+    # count the mode of votes list (return: pos/neg)
+    def classify(self, features):
+        v = self.classifiers.classify(features)
+        return v
+
 
 # tokenizing each file to words and label them with its category for training (output: list of tuples)
-documents = [(list(movie_reviews.words(fileid)), category)
-             for category in movie_reviews.categories()
-             for fileid in movie_reviews.fileids(category)]
+# documents = [(list(movie_reviews.words(fileid)), category)
+#             for category in movie_reviews.categories()
+#             for fileid in movie_reviews.fileids(category)]
+
+
+# opening pickled documents
+documents_f = open('documents.pickle', 'rb')
+documents = pickle.load(documents_f)
+documents_f.close()
 
 # shuffle the data to avoid ordered label
 random.shuffle(documents)
@@ -37,6 +56,16 @@ featuresets = [(find_features(rev), category) for (rev, category) in documents]
 training_set = featuresets[:1400]
 testing_set = featuresets[1400:]
 
-classifier = nltk.NaiveBayesClassifier.train(training_set)
+# classifier = nltk.NaiveBayesClassifier.train(training_set)
+
+# opening pickled classifier
+classifier_f = open('naivebayes.pickle', 'rb')
+classifier = pickle.load(classifier_f)
+classifier_f.close()
+
 print('Naive Bayes Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
 classifier.show_most_informative_features(15)
+
+voted_labels = VoteLabel(classifier)
+print("Classification:", voted_labels.classify(testing_set[0][0]))
+
