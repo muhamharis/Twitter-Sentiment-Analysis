@@ -5,7 +5,7 @@ from nltk.classify import ClassifierI
 from nltk.tokenize import word_tokenize
 
 
-class Classifying(ClassifierI):
+class Classify(ClassifierI):
     def __init__(self, classifiers):
         self.classifiers = classifiers
 
@@ -47,7 +47,7 @@ classifier_f = open('pickled/naivebayes.pickle', 'rb')
 classifier = pickle.load(classifier_f)
 classifier_f.close()
 
-text_classifier = Classifying(classifier)
+text_classifier = Classify(classifier)
 
 print('Naive Bayes Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
 classifier.show_most_informative_features(15)
