@@ -1,5 +1,5 @@
 import random
-import nltk
+#import nltk
 import pickle
 from nltk.classify import ClassifierI
 from nltk.tokenize import word_tokenize
@@ -49,8 +49,8 @@ classifier_f.close()
 
 text_classifier = Classify(classifier)
 
-print('Naive Bayes Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
-classifier.show_most_informative_features(15)
+#print('Naive Bayes Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
+#classifier.show_most_informative_features(15)
 
 
 def sentiment(text):
