@@ -1,8 +1,9 @@
 import random
-#import nltk
+# import nltk
 import pickle
 from nltk.classify import ClassifierI
 from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
 
 
 class Classify(ClassifierI):
@@ -32,6 +33,14 @@ def find_features(document):
         features[w] = (w in words)
     return features
 
+def lemmatize_verbs(words):
+    lemmatizer = WordNetLemmatizer()
+    lemmas = []
+    for w in words:
+        lemma = lemmatizer.lemmatize(w, pos='v')
+        lemmas.append(lemma)
+    return lemmas
+
 
 featuresets_f = open('pickled/featuresets.pickle', 'rb')
 featuresets = pickle.load(featuresets_f)
@@ -49,8 +58,8 @@ classifier_f.close()
 
 text_classifier = Classify(classifier)
 
-#print('Naive Bayes Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
-#classifier.show_most_informative_features(15)
+# print('Naive Bayes Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
+# classifier.show_most_informative_features(15)
 
 
 def sentiment(text):

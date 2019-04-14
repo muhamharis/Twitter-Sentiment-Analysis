@@ -1,10 +1,10 @@
 import nltk
 import random
 import string
-import re
 from nltk.corpus import stopwords
 from nltk.classify import ClassifierI
 from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
 
 
 class Classify(ClassifierI):
@@ -47,6 +47,18 @@ for w in neg_data_words:
     if w not in stop_words and w not in string.punctuation:
         all_words.append(w.lower())
 
+
+def lemmatize_verbs(words):
+    lemmatizer = WordNetLemmatizer()
+    lemmas = []
+    for w in words:
+        lemma = lemmatizer.lemmatize(w, pos='v')
+        lemmas.append(lemma)
+    return lemmas
+
+
+all_words = lemmatize_verbs(all_words)
+
 # reduce all_words to contains only most common words (convert words to features) (output: keys:values - words:count)
 all_words = nltk.FreqDist(all_words)
 word_features = list(all_words.keys())
@@ -63,6 +75,7 @@ def find_features(document):
 
 # add every feature and its category to featuresets
 featuresets = [(find_features(rev), category) for (rev, category) in documents]
+
 random.shuffle(featuresets)
 
 # 70:30 ratio of 10664 data
