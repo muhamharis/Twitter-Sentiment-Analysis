@@ -1,6 +1,8 @@
 import nltk
 import random
 import string
+import re
+import pickle
 from nltk.corpus import stopwords
 from nltk.classify import ClassifierI
 from nltk.tokenize import word_tokenize
@@ -47,6 +49,10 @@ for w in neg_data_words:
     if w not in stop_words and w not in string.punctuation:
         all_words.append(w.lower())
 
+# remove numbers
+for w in all_words:
+    w = re.sub('[^a-zA-Z]', ' ', w)
+
 
 def lemmatize_verbs(words):
     lemmatizer = WordNetLemmatizer()
@@ -74,7 +80,12 @@ def find_features(document):
 
 
 # add every feature and its category to featuresets
-featuresets = [(find_features(rev), category) for (rev, category) in documents]
+featuresets = []
+
+for (rev, category) in documents:
+    rev = lemmatize_verbs(word_tokenize(rev))
+    rev = (' '.join(rev)).strip()
+    featuresets.append((find_features(rev), category))
 
 random.shuffle(featuresets)
 
