@@ -6,7 +6,6 @@ import json
 import re
 import sentiment_mod as s
 
-
 # consumer key, consumer secret, access token, access secret.
 ckey = ""
 csecret = ""
@@ -17,10 +16,12 @@ asecret = ""
 class Listener(StreamListener):
 
     def on_data(self, data):
-
         all_data = json.loads(data)
         if 'extended_tweet' in all_data:
-            tweet = all_data['extended_tweet']['full_text']
+            if 'retweeted_status' in all_data:
+                tweet = all_data['retweeted_status']['full_text']
+            else:
+                tweet = all_data['extended_tweet']['full_text']
         else:
             tweet = all_data['text']
         cleaned_tweets = clean_tweets(tweet)
@@ -54,4 +55,4 @@ auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)
 
 twitterStream = Stream(auth, Listener(), tweet_mode='extended')
-twitterStream.filter(track=["Cersei"], languages=["en"])
+twitterStream.filter(track=["happy"], languages=["en"])
