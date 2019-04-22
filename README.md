@@ -1,4 +1,4 @@
-# sent_analysis-1.0
+# twitter-sent-analysis
 Sentiment analysis using Naive Bayes Classifier
 
 ## Technologies Used
