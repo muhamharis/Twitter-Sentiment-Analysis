@@ -10,8 +10,8 @@ ax1 = fig.add_subplot(1, 1, 1)
 
 
 def animate(i):
-    pullData = open("twitter-out.txt", "r").read()
-    lines = pullData.split('\n')
+    pull_data = open("twitter-out.txt", "r").read()
+    lines = pull_data.split('\n')
 
     xar = []
     yar = []

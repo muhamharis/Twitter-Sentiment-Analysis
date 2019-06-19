@@ -2,11 +2,13 @@ import nltk
 import random
 import string
 import re
-import pickle
 from nltk.corpus import stopwords
 from nltk.classify import ClassifierI
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from nltk.classify.scikitlearn import SklearnClassifier
+from sklearn.linear_model import LogisticRegression
+import pickle
 
 
 class Classify(ClassifierI):
@@ -70,7 +72,7 @@ all_words = nltk.FreqDist(all_words)
 word_features = list(all_words.keys())
 
 
-# function to find features in a document
+# function to find features in a document (feature extraction: BoW - unigram)
 def find_features(document):
     words = word_tokenize(document)
     features = {}
@@ -93,10 +95,13 @@ random.shuffle(featuresets)
 training_set = featuresets[:7465]
 testing_set = featuresets[7465:]
 
-classifier = nltk.NaiveBayesClassifier.train(training_set)
+classifier = SklearnClassifier(LogisticRegression(solver='lbfgs')).train(training_set)
 
-print('Naive Bayes Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
-classifier.show_most_informative_features(15)
+save_classifier = open("pickled/logisticreg.pickle", "wb")
+pickle.dump(classifier, save_classifier, pickle.HIGHEST_PROTOCOL)
+save_classifier.close()
+
+print('Logistic Regression Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
 
 voted_labels = Classify(classifier)
 print("Classification:", voted_labels.classify(testing_set[0][0]))

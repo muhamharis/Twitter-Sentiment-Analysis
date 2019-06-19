@@ -1,5 +1,5 @@
 import random
-# import nltk
+import nltk
 import pickle
 from nltk.classify import ClassifierI
 from nltk.tokenize import word_tokenize
@@ -52,13 +52,14 @@ random.shuffle(featuresets)
 training_set = featuresets[:7465]
 testing_set = featuresets[7465:]
 
-classifier_f = open('pickled/naivebayes.pickle', 'rb')
+classifier_f = open('pickled/logisticreg.pickle', 'rb')
 classifier = pickle.load(classifier_f)
 classifier_f.close()
 
+
 text_classifier = Classify(classifier)
 
-# print('Naive Bayes Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
+print('Logistic Regression Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
 # classifier.show_most_informative_features(15)
 
 
