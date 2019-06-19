@@ -1,5 +1,5 @@
 # twitter-sent-analysis
-Sentiment analysis using Naive Bayes Classifier
+Sentiment analysis using Logistic Regression
 
 ## Technologies Used
 * **[Python3](https://www.python.org/downloads/)** - Python is an interpreted, object-oriented, high-level programming language with dynamic semantics.
