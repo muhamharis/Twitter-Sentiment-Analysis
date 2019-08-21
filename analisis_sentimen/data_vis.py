@@ -7,6 +7,7 @@ style.use("ggplot")
 
 fig = plt.figure()
 ax1 = fig.add_subplot(1, 1, 1)
+fig.canvas.set_window_title('Live Graph')
 
 
 def animate(i):
@@ -30,6 +31,9 @@ def animate(i):
         yar.append(y)
 
     ax1.clear()
+    plt.title('Sentiment Analysis: Live Graph')
+    plt.xlabel('Number of tweets')
+    plt.ylabel('Sentiment score')
     ax1.plot(xar, yar)
 
 
