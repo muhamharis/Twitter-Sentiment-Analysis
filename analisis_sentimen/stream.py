@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
@@ -13,17 +7,11 @@ import import_ipynb
 import sentiment_mod as s
 
 
-# In[2]:
-
-
 # consumer key, consumer secret, access token, access secret.
 ckey = ""
 csecret = ""
 atoken = "-"
 asecret = ""
-
-
-# In[3]:
 
 
 class Listener(StreamListener):
@@ -53,10 +41,6 @@ class Listener(StreamListener):
     def on_error(self, status):
         print(status)
 
-
-# In[ ]:
-
-
 def clean_tweets(tweet):
     rt_removed = re.sub('RT @[\w_]+: ', '', tweet)
     user_removed = re.sub(r'@[A-Za-z0-9]+', '', rt_removed)
@@ -70,18 +54,8 @@ def clean_tweets(tweet):
     return clean_tweet
 
 
-# In[ ]:
-
-
 auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)
 
 twitterStream = Stream(auth, Listener())
 twitterStream.filter(track=["donald trump"], languages=["en"])
-
-
-# In[ ]:
-
-
-
-
