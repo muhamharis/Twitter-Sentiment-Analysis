@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
-
 import nltk
 import random
 import string
@@ -16,10 +10,6 @@ from nltk.classify.scikitlearn import SklearnClassifier
 from sklearn.linear_model import LogisticRegression
 import pickle
 
-
-# In[4]:
-
-
 class Classify(ClassifierI):
     def __init__(self, classifiers):
         self.classifiers = classifiers
@@ -29,10 +19,6 @@ class Classify(ClassifierI):
     def classify(self, features):
         v = self.classifiers.classify(features)
         return v
-
-
-# In[5]:
-
 
 # opening datasets
 
@@ -48,19 +34,11 @@ for r in pos_data.split('\n'):
 for r in neg_data.split('\n'):
     documents.append((r, 'neg'))
 
-
-# In[6]:
-
-
 all_words = []
 
 # tokenize sentence to words
 pos_data_words = word_tokenize(pos_data)
 neg_data_words = word_tokenize(neg_data)
-
-
-# In[7]:
-
 
 stop_words = set(stopwords.words('english'))
 
@@ -89,9 +67,6 @@ def lemmatize_verbs(words):
 all_words = lemmatize_verbs(all_words)
 
 
-# In[8]:
-
-
 # reduce all_words to contains only most common words (convert words to features) (output: keys:values - words:count)
 all_words = nltk.FreqDist(all_words)
 word_features = list(all_words.keys())
@@ -117,9 +92,6 @@ for (rev, category) in documents:
 random.shuffle(featuresets)
 
 
-# In[ ]:
-
-
 # 70:30 ratio of 10664 data
 training_set = featuresets[:7465]
 testing_set = featuresets[7465:]
@@ -133,10 +105,3 @@ save_classifier.close()
 print('Logistic Regression Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
 voted_labels = Classify(classifier)
 print("Classification:", voted_labels.classify(testing_set[0][0]))
-
-
-# In[ ]:
-
-
-
-
