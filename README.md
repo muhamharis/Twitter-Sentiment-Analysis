@@ -41,3 +41,4 @@ Home movie review tweet to class positive or negative using logistic regression 
 1. Clone this repo (for help see this [tutorial](https://help.github.com/articles/cloning-a-repository/)).
 2. Raw Data is being kept [here](https://github.com/muhamharis/Twitter-Sentiment-Analysis/tree/master/analisis_sentimen/datasets) within this repo.
 
+<center><img src='https://github.com/muhamharis/Twitter-Sentiment-Analysis/blob/master/analisis_sentimen/visualization/visual.PNG?raw=true'></center>
