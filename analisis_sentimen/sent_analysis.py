@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[2]:
+
+
 import nltk
 import random
 import string
@@ -11,19 +17,27 @@ from sklearn.linear_model import LogisticRegression
 import pickle
 
 
+# In[4]:
+
+
 class Classify(ClassifierI):
     def __init__(self, classifiers):
         self.classifiers = classifiers
 
-    # classify the most appropriate label for the given features
+        # classify the most appropriate label for the given features
+
     def classify(self, features):
         v = self.classifiers.classify(features)
         return v
 
 
+# In[5]:
+
+
 # opening datasets
-pos_data = open('datasets/positive.txt', 'r').read()
-neg_data = open('datasets/negative.txt', 'r').read()
+
+pos_data = open('dataset/positive.txt', 'r').read()
+neg_data = open('dataset/negative.txt', 'r').read()
 
 documents = []
 
@@ -34,11 +48,19 @@ for r in pos_data.split('\n'):
 for r in neg_data.split('\n'):
     documents.append((r, 'neg'))
 
+
+# In[6]:
+
+
 all_words = []
 
 # tokenize sentence to words
 pos_data_words = word_tokenize(pos_data)
 neg_data_words = word_tokenize(neg_data)
+
+
+# In[7]:
+
 
 stop_words = set(stopwords.words('english'))
 
@@ -55,7 +77,6 @@ for w in neg_data_words:
 for w in all_words:
     w = re.sub('[^a-zA-Z]', ' ', w)
 
-
 def lemmatize_verbs(words):
     lemmatizer = WordNetLemmatizer()
     lemmas = []
@@ -66,6 +87,10 @@ def lemmatize_verbs(words):
 
 
 all_words = lemmatize_verbs(all_words)
+
+
+# In[8]:
+
 
 # reduce all_words to contains only most common words (convert words to features) (output: keys:values - words:count)
 all_words = nltk.FreqDist(all_words)
@@ -91,6 +116,10 @@ for (rev, category) in documents:
 
 random.shuffle(featuresets)
 
+
+# In[ ]:
+
+
 # 70:30 ratio of 10664 data
 training_set = featuresets[:7465]
 testing_set = featuresets[7465:]
@@ -102,6 +131,12 @@ pickle.dump(classifier, save_classifier, pickle.HIGHEST_PROTOCOL)
 save_classifier.close()
 
 print('Logistic Regression Accuracy: ', (nltk.classify.accuracy(classifier, testing_set)) * 100)
-
 voted_labels = Classify(classifier)
 print("Classification:", voted_labels.classify(testing_set[0][0]))
+
+
+# In[ ]:
+
+
+
+
