@@ -1,19 +1,9 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
-
 import random
 import nltk
 import pickle
 from nltk.classify import ClassifierI
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
-
-
-# In[3]:
-
 
 class Classify(ClassifierI):
     def __init__(self, classifiers):
@@ -24,10 +14,6 @@ class Classify(ClassifierI):
         v = self.classifiers.classify(features)
         return v
 
-
-# In[4]:
-
-
 documents_f = open('pickled/documents.pickle', 'rb')
 documents = pickle.load(documents_f)
 documents_f.close()
@@ -35,9 +21,6 @@ documents_f.close()
 word_features_f = open('pickled/word_features.pickle', 'rb')
 word_features = pickle.load(word_features_f)
 word_features_f.close()
-
-
-# In[5]:
 
 
 # function to find features in a document
@@ -57,17 +40,11 @@ def lemmatize_verbs(words):
     return lemmas
 
 
-# In[6]:
-
-
 featuresets_f = open('pickled/featuresets.pickle', 'rb')
 featuresets = pickle.load(featuresets_f)
 featuresets_f.close()
 
 random.shuffle(featuresets)
-
-
-# In[7]:
 
 
 # 70:30 ratio of 10664 data
