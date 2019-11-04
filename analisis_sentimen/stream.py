@@ -58,4 +58,4 @@ auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)
 
 twitterStream = Stream(auth, Listener())
-twitterStream.filter(track=["donald trump"], languages=["en"])
+twitterStream.filter(track=["Spider-Man: Far From Home"], languages=["en"])
