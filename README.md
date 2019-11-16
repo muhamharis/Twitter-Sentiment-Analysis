@@ -44,3 +44,5 @@ Home movie review tweet to class positive or negative using logistic regression 
 <p align="center">
   <img src="https://github.com/muhamharis/Twitter-Sentiment-Analysis/blob/master/analisis_sentimen/visualization/visual.PNG?raw=true" alt="Data visualization"/>
 </p>
+
+Credit: https://pythonprogramming.net/tokenizing-words-sentences-nltk-tutorial/
